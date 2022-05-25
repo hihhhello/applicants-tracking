@@ -3,7 +3,10 @@ import { ApplicantPreview, ColumnsList } from './models';
 
 export const getAllColumns = (): ColumnsList => {
   const localItem = localStorage.getItem(COLUMNS_TABLE);
-  return localItem ? JSON.parse(localItem) : {};
+
+  const columns = localItem ? JSON.parse(localItem) : {};
+
+  return columns;
 };
 
 export const moveApplicant = (
