@@ -38,14 +38,16 @@ export const MoveApplicant = ({ applicant, columnKey, columnsKeys }: Props) => {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        // onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
       >
-        {columnsKeys.map((key) => (
-          <MenuItem onClick={onMove(key)}>{key}</MenuItem>
-        ))}
+        {/* eslint-disable-next-line array-callback-return */}
+        {columnsKeys.map((key) => {
+          if (key !== columnKey) {
+            return <MenuItem onClick={onMove(key)}>{key}</MenuItem>;
+          }
+        })}
       </Menu>
     </Box>
   );

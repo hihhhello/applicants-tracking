@@ -15,6 +15,7 @@ export const Column = ({
     <Stack
       sx={{
         border: '1px solid #000',
+        borderRadius: 2,
         width: 200,
         ...sx,
       }}

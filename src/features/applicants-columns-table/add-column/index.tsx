@@ -45,6 +45,12 @@ export const AddColumn = () => {
       sx={{
         cursor: 'pointer',
         height: '100%',
+        boxShadow: 'inset 0 0 10px grey',
+        ':hover': {
+          boxShadow: 'inset 0 0 10px #000',
+        },
+        transition: '.2s all',
+        border: 'none',
       }}
       direction="column"
       alignItems="center"
