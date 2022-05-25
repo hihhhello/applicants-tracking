@@ -52,6 +52,7 @@ export const AddApplicant = ({ columnKey }: Props) => {
       sx={{
         textAlign: 'center',
         border: 'none',
+        height: 'unset',
       }}
     >
       <Stack display="flex" flexDirection="column" alignItems="center">

@@ -9,7 +9,11 @@ import { ApplicantPreview } from 'shared/api';
 
 interface Props {
   sx?: SxProps;
-  rowMenuActions?: MenuActionsList<ApplicantPreview>;
+  rowMenuActions?: MenuActionsList<{
+    applicant: ApplicantPreview;
+    columnKey: string;
+    columnsKeys: string[];
+  }>;
 }
 
 export const ApplicantsColumnsTable = (props: Props) => {
@@ -27,10 +31,11 @@ export const ApplicantsColumnsTable = (props: Props) => {
   return (
     <Box
       sx={{
-        width: '100%',
+        maxWidth: '100%',
         height: '100%',
         display: 'flex',
-        gap: 8,
+        gap: sortedColumns.length ? 1 : 0,
+        overflowX: 'auto',
         ...sx,
       }}
     >
@@ -52,18 +57,35 @@ export const ApplicantsColumnsTable = (props: Props) => {
                   gap: 0.5,
                 }}
               >
-                {columnData.applicants.map((row) => (
-                  <Card key={row.id} menuActions={rowMenuActions}>
-                    {row.name}
-                  </Card>
-                ))}
+                {columnData.applicants.map((row) => {
+                  const actions = rowMenuActions?.map((action) => ({
+                    key: action.name,
+                    element: action.element({
+                      applicant: row,
+                      columnKey: key,
+                      columnsKeys: Object.keys(columns),
+                    }),
+                  }));
+
+                  return (
+                    <Card key={row.id} menuActions={actions}>
+                      {row.name}
+                    </Card>
+                  );
+                })}
               </Stack>
               <AddApplicant columnKey={key} />
             </Column>
           );
         })}
       </Box>
-      <AddColumn />
+      <Box
+        sx={{
+          height: '100%',
+        }}
+      >
+        <AddColumn />
+      </Box>
     </Box>
   );
 };
