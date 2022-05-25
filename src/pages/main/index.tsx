@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { ApplicantsColumnsTable } from 'features/applicants-columns-table';
+import { MoveApplicant } from 'features/move-applicant';
 
 const MainPage = () => {
   return (
@@ -16,13 +17,29 @@ const MainPage = () => {
         sx={{
           width: '80vw',
           height: '80%',
-          overflowX: 'auto',
+          border: '2px solid grey',
+          paddingInline: 2,
+          borderRadius: 2,
         }}
       >
         <ApplicantsColumnsTable
           sx={{
-            maxWidth: '999vw',
+            paddingBlock: 2,
           }}
+          rowMenuActions={[
+            {
+              name: 'Move applicant',
+              element: (row) => {
+                return (
+                  <MoveApplicant
+                    applicant={row.applicant}
+                    columnKey={row.columnKey}
+                    columnsKeys={row.columnsKeys}
+                  />
+                );
+              },
+            },
+          ]}
         />
       </Box>
     </Box>

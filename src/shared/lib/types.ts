@@ -1,6 +1,8 @@
+import React from 'react';
+
 export interface MenuAction<T> {
   name: string;
-  onClick: (item: T) => void;
+  element: (item: T) => React.ReactNode;
 }
 
 export type MenuActionsList<T> = MenuAction<T>[];

@@ -7,19 +7,25 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { ColumnsList, localApi } from 'shared/api';
+import { ApplicantPreview, ColumnsList, localApi } from 'shared/api';
 import { toast } from 'react-toastify';
 
 interface IColumnsContext {
   columns: ColumnsList;
   addNewColumn: (columnKey: string) => ColumnsList | null;
   fetchColumns: () => ColumnsList;
+  moveApplicant: (
+    applicant: ApplicantPreview,
+    moveFrom: string,
+    moveTo: string,
+  ) => ColumnsList | null;
 }
 
 const initialValues: IColumnsContext = {
   columns: {},
   addNewColumn: () => null,
   fetchColumns: () => ({}),
+  moveApplicant: () => null,
 };
 
 const ColumnsContext = createContext(initialValues);
@@ -53,14 +59,32 @@ export const ColumnsContextProvider = ({ children }: PropsWithChildren<{}>) => {
     return data;
   }, []);
 
+  const moveApplicant = useCallback(
+    (applicant: ApplicantPreview, moveFrom: string, moveTo: string) => {
+      const data = localApi.moveApplicant(applicant, moveFrom, moveTo);
+      if (!data) {
+        toast('Something gone wrong while moving', {
+          type: 'error',
+          toastId: 'moving-error',
+        });
+        return null;
+      }
+
+      setColumns(data);
+
+      return data;
+    },
+    [],
+  );
+
   useEffect(() => {
     fetchColumns();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const values: IColumnsContext = useMemo(
-    () => ({ fetchColumns, columns, addNewColumn }),
-    [columns, fetchColumns, addNewColumn],
+    () => ({ fetchColumns, columns, addNewColumn, moveApplicant }),
+    [columns, fetchColumns, addNewColumn, moveApplicant],
   );
 
   return (

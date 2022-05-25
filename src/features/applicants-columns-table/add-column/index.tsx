@@ -44,6 +44,7 @@ export const AddColumn = () => {
     <Column
       sx={{
         cursor: 'pointer',
+        height: '100%',
       }}
       direction="column"
       alignItems="center"

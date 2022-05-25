@@ -33,7 +33,15 @@ export const Column = ({
           {header}
         </Typography>
       </Box>
-      {children}
+      <Box
+        sx={{
+          maxHeight: '100%',
+          overflowY: 'auto',
+          textAlign: 'center',
+        }}
+      >
+        {children}
+      </Box>
     </Stack>
   );
 };
